@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b4d3a">
+<title>Zaiqa e Khas - Home Kitchen</title>
+
+<style>
+:root {
+  --green: #0b4d3a;
+  --green-light: #0e6b4f;
+  --orange: #f5a623;
+  --cream: #f6f3ec;
+  --text: #202522;
+  --muted: #66716b;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  padding: 0 0 calc(82px + env(safe-area-inset-bottom));
+  background: #e8e2d6;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+button, input, textarea { font: inherit; }
+button { touch-action: manipulation; }
+.wrap {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--cream);
+  box-shadow: 0 0 20px rgba(0,0,0,.12);
+}
+.top {
+  padding: 20px 14px;
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+}
+.top h1 { margin: 0; font-size: clamp(22px, 6vw, 29px); line-height: 1.25; }
+.top p { margin: 8px 0 0; font-size: 14px; opacity: .92; }
+.badge {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: var(--orange);
+  color: #111;
+  font-size: 10px;
+  vertical-align: middle;
+}
+.phones {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.phones a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 13px;
+  border-radius: 24px;
+  background: var(--green-light);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+.banner {
+  padding: 11px 14px;
+  background: var(--orange);
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: bold;
+}
+.filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.filters button {
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid #d8ddd9;
+  border-radius: 24px;
+  background: #fff;
+  color: var(--text);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.filters button.active { background: var(--green); color: #fff; }
+.card {
+  overflow: hidden;
+  margin: 12px 14px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.09);
+}
+.card-img {
+  display: block;
+  width: 100%;
+  height: clamp(190px, 58vw, 300px);
+  object-fit: cover;
+  object-position: center;
+  background: #e9eee9;
+}
+.card-body { padding: 14px; }
+.tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #fff2d9;
+  font-size: 11px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.item-name { font-size: 16px; }
+.price {
+  color: var(--green);
+  font-size: 17px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.card-body p {
+  margin: 8px 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.unit { color: #7a817d; font-size: 12px; }
+.add {
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 22px;
+  background: var(--green);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.qty { display: flex; align-items: center; gap: 12px; }
+.qty button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--green);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--green);
+  font-size: 22px;
+  cursor: pointer;
+}
+.note {
+  margin: 14px;
+  padding: 15px;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.note h3 { margin: 0 0 8px; color: var(--green); }
+.footer {
+  margin: 14px;
+  padding: 20px 14px;
+  border-radius: 14px;
+  background: #1a2a2e;
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.cart-bar {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 -3px 12px rgba(0,0,0,.15);
+}
+.cart-bar button {
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--orange);
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: none;
+  overflow-y: auto;
+  padding: 16px;
+  background: rgba(0,0,0,.62);
+}
+.modal-box {
+  width: 100%;
+  max-width: 480px;
+  margin: 12px auto;
+  padding: 18px;
+  border-radius: 16px;
+  background: #fff;
+}
+.modal-box h2 { margin: 0 0 14px; color: var(--green); }
+#cartItems p {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+input, textarea {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid #d8ddd9;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 16px;
+}
+textarea { min-height: 82px; resize: vertical; }
+.send {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 12px;
+  background: #25d366;
+  color: #072b16;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: #eee;
+  cursor: pointer;
+}
+@media (max-width: 360px) {
+  .card { margin-right: 10px; margin-left: 10px; }
+  .card-body { padding: 12px; }
+  .item-name { font-size: 14px; }
+  .add { padding: 9px 10px; font-size: 13px; }
+  .cart-bar { padding-right: 10px; padding-left: 10px; }
+  .cart-bar button { padding: 9px 10px; font-size: 13px; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="banner">⭐ Wednesday Special: Chinese Rice (with 2 Kababs) available fresh every Wednesday!</div>
+
+  <header class="top">
+    <h1>Zaiqa e Khas <span class="badge">HOME KITCHEN</span></h1>
+    <p>Fresh &amp; Hygienic Homemade Food &amp; Frozen Delights (Attock)</p>
+    <div class="phones">
+      <a href="tel:03205656221">📞 0320-5656221</a>
+      <a href="tel:03143324072">📞 0314-3324072</a>
+    </div>
+  </header>
+
+  <nav class="filters" aria-label="Filter menu items">
+    <button class="active" type="button" onclick="filterItems('all',this)">All Items</button>
+    <button type="button" onclick="filterItems('frozen',this)">❄️ Frozen Items</button>
+    <button type="button" onclick="filterItems('fresh',this)">🍲 Fresh &amp; Special</button>
+  </nav>
+
+  <main id="menu"></main>
+
+  <section class="note">
+    <h3>🧡 Order &amp; Preparation Note</h3>
+    - All <b>Frozen Items</b> are freshly packed in hygienic 6-piece packs.<br>
+    - <b>Chinese Rice (with 2 Kababs)</b> is prepared every <b>Wednesday</b> — pre-book early!<br>
+    - For bulk party orders, mention details in checkout notes.
+  </section>
+
+  <footer class="footer">
+    <b>Zaiqa e Khas</b><br>
+    Homemade Taste You Can Trust • Hygienic &amp; Fresh<br><br>
+    📞 0320-5656221 | 0314-3324072<br><br>
+    © 2026 Zaiqa e Khas Home-Based Kitchen Attock
+  </footer>
+</div>
+
+<div class="cart-bar">
+  <div>
+    <span id="count">0 Items Selected</span><br>
+    <b id="total">Total: Rs. 0</b>
+  </div>
+  <button type="button" onclick="openCart()">View Cart &amp; Order 💬</button>
+</div>
+
+<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+  <div class="modal-box">
+    <h2 id="cartTitle">Your Order</h2>
+    <div id="cartItems"></div>
+    <hr>
+    <input id="cname" autocomplete="name" placeholder="Your Name *" required>
+    <input id="cphone" type="tel" autocomplete="tel" placeholder="Your Phone Number *" required>
+    <textarea id="caddress" autocomplete="street-address" placeholder="Full Delivery Address (Attock) *" required></textarea>
+    <textarea id="cnote" placeholder="Notes (e.g. bulk order, less spicy, etc.)"></textarea>
+    <p><b id="grandTotal"></b></p>
+    <button class="send" type="button" onclick="sendWhatsApp()">Send Order on WhatsApp ✅</button>
+    <button class="close" type="button" onclick="closeCart()">Close</button>
+  </div>
+</div>
+
+<script>
+const items = [
+  {
+    id: 1,
+    name: "Round Chicken Kababs",
+    price: 250,
+    cat: "frozen",
+    img: "chicken kabab.webp",
+    desc: "Juicy, flavorful homemade round chicken kababs ready to shallow fry.",
+    unit: "6 Pcs Pack • Frozen"
+  },
+  {
+    id: 2,
+    name: "Chicken Koftay",
+    price: 380,
+    cat: "frozen",
+    img: "chicken kofta.webp",
+    desc: "Tender, aromatic minced chicken meatballs perfect for rich curries.",
+    unit: "6 Pcs Pack • Frozen"
+  },
+  {
+    id: 3,
+    name: "Macaroni Chicken Rolls",
+    price: 280,
+    cat: "frozen",
+    img: "chicken mac roll.webp",
+    desc: "Crispy golden rolls stuffed with creamy chicken & macaroni filling.",
+    unit: "6 Pcs Pack • Frozen"
+  },
+  {
+    id: 4,
+    name: "Chinese Rice (with 2 Kababs)",
+    price: 250,
+    cat: "fresh",
+    img: "chinese rice.jpg",
+    desc: "Aromatic vegetable & chicken fried rice served hot with 2 homemade kababs.",
+    unit: "Per Plate • Every Wednesday Only"
+  },
+  {
+    id: 5,
+    name: "Special Channa Chat",
+    price: 100,
+    cat: "fresh",
+    img: "channa chat.webp",
+    desc: "Tangy, spicy chickpeas tossed with fresh veggies, chutneys & chaat masala.",
+    unit: "Per Plate • Fresh"
+  }
+];
+
+let cart = {};
+let currentFilter = "all";
+
+function render(filter = "all") {
+  const visibleItems = items.filter(item => filter === "all" || item.cat === filter);
+
+  document.getElementById("menu").innerHTML = visibleItems.map(item => {
+    const quantity = cart[item.id] || 0;
+
+    return `
+      <article class="card">
+        <img
+          class="card-img"
+          src="${item.img}"
+          alt="${item.name}"
+          loading="lazy"
+          decoding="async"
+          onerror="this.onerror=null;this.src='https://placehold.co/900x600/f6f3ec/0b4d3a?text=Zaiqa+e+Khas';"
+        >
+        <div class="card-body">
+          <span class="tag">${item.unit}</span>
+          <div class="row">
+            <b class="item-name">${item.name}</b>
+            <span class="price">Rs. ${item.price}</span>
+          </div>
+          <p>${item.desc}</p>
+          <div class="row">
+            <span class="unit">${item.unit}</span>
+            ${quantity === 0
+              ? `<button class="add" type="button" onclick="add(${item.id})">+ Add to Order</button>`
+              : `<div class="qty" aria-label="Quantity">
+                   <button type="button" aria-label="Remove one" onclick="changeQty(${item.id},-1)">−</button>
+                   <b>${quantity}</b>
+                   <button type="button" aria-label="Add one" onclick="changeQty(${item.id},1)">+</button>
+                 </div>`
+            }
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  updateBar();
+}
+
+function add(id) {
+  cart[id] = 1;
+  render(currentFilter);
+}
+
+function changeQty(id, change) {
+  cart[id] = (cart[id] || 0) + change;
+  if (cart[id] <= 0) delete cart[id];
+  render(currentFilter);
+}
+
+function filterItems(filter, button) {
+  currentFilter = filter;
+  document.querySelectorAll(".filters button").forEach(item => item.classList.remove("active"));
+  button.classList.add("active");
+  render(filter);
+}
+
+function getTotal() {
+  let total = 0;
+  let count = 0;
+
+  for (const id in cart) {
+    const item = items.find(product => product.id === Number(id));
+    if (item) {
+      total += item.price * cart[id];
+      count += cart[id];
+    }
+  }
+
+  return { total, count };
+}
+
+function updateBar() {
+  const { total, count } = getTotal();
+  document.getElementById("count").textContent =
+    count + (count === 1 ? " Item Selected" : " Items Selected");
+  document.getElementById("total").textContent = "Total: Rs. " + total;
+}
+
+function openCart() {
+  const { total, count } = getTotal();
+
+  if (count === 0) {
+    alert("Pehle koi item add karein!");
+    return;
+  }
+
+  const rows = Object.entries(cart).map(([id, quantity]) => {
+    const item = items.find(product => product.id === Number(id));
+    return `<p><span>${item.name} × ${quantity}</span><b>Rs. ${item.price * quantity}</b></p>`;
+  }).join("");
+
+  document.getElementById("cartItems").innerHTML = rows;
+  document.getElementById("grandTotal").textContent = "Total: Rs. " + total;
+  document.getElementById("cartModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
+function closeCart() {
+  document.getElementById("cartModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+function sendWhatsApp() {
+  const name = document.getElementById("cname").value.trim();
+  const phone = document.getElementById("cphone").value.trim();
+  const address = document.getElementById("caddress").value.trim();
+  const note = document.getElementById("cnote").value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please enter your name, phone number, and address.");
+    return;
+  }
+
+  const { total, count } = getTotal();
+  if (count === 0) {
+    alert("Your cart is empty. Please add an item first.");
+    closeCart();
+    return;
+  }
+
+  const orderLines = Object.entries(cart).map(([id, quantity]) => {
+    const item = items.find(product => product.id === Number(id));
+    return `• ${item.name} x ${quantity} = Rs. ${item.price * quantity}`;
+  });
+
+  const message = [
+    "*NEW ORDER - Zaiqa e Khas*",
+    "",
+    ...orderLines,
+    "",
+    `*Total: Rs. ${total}*`,
+    "",
+    `*Name:* ${name}`,
+    `*Phone:* ${phone}`,
+    `*Address:* ${address}`,
+    `*Note:* ${note || "-"}`
+  ].join("\n");
+
+  const whatsappUrl = "https://wa.me/923205656221?text=" + encodeURIComponent(message);
+  window.open(whatsappUrl, "_blank", "noopener");
+}
+
+document.getElementById("cartModal").addEventListener("click", function(event) {
+  if (event.target === this) closeCart();
+});
+
+render();
+</script>
+</body>
+</html>
